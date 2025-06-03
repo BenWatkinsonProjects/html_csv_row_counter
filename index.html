@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="style.css">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple CSV Row Counter</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+      padding: 2rem;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: auto;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="file"] {
+      margin-top: 1rem;
+    }
+    #result {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CSV Row Counter</h1>
+    <input type="file" id="csvFile" accept=".csv" />
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById("csvFile").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const text = event.target.result;
+        const rows = text.trim().split("\n");
+        const count = rows.length - 1; // subtract header
+        document.getElementById("result").textContent = `Row count: ${count}`;
+      };
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>
